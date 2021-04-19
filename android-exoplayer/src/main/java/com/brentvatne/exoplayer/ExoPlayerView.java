@@ -124,7 +124,7 @@ public final class ExoPlayerView extends FrameLayout {
         if (this.player == player) {
             return;
         }
-        fdsafdsfa
+        
         if (this.player != null) {
             this.player.addTextOutput(null);
             this.player.addVideoListener(null);
