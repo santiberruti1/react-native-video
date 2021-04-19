@@ -1339,26 +1339,6 @@ class ReactExoplayerView extends FrameLayout implements
     }
 
 
-    @Override
-    public void onDrmKeysLoaded() {
-        Log.d("DRM Info", "onDrmKeysLoaded");
-    }
-
-    @Override
-    public void onDrmSessionManagerError(Exception e) {
-        Log.d("DRM Info", "onDrmSessionManagerError");
-        eventEmitter.error("onDrmSessionManagerError", e);
-    }
-
-    @Override
-    public void onDrmKeysRestored() {
-        Log.d("DRM Info", "onDrmKeysRestored");
-    }
-
-    @Override
-    public void onDrmKeysRemoved() {
-        Log.d("DRM Info", "onDrmKeysRemoved");
-    }
 
     /**
      * Handling controls prop
