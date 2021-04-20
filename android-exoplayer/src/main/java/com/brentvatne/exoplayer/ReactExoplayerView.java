@@ -429,8 +429,11 @@ class ReactExoplayerView extends FrameLayout implements
                         }
                     }
                     // End DRM
-                    player = ExoPlayerFactory.newSimpleInstance(getContext(), renderersFactory,
-                            trackSelector, defaultLoadControl, drmSessionManager, bandwidthMeter);
+                    // player = ExoPlayerFactory.newSimpleInstance(getContext(), renderersFactory,
+                            // trackSelector, defaultLoadControl, drmSessionManager, bandwidthMeter);
+                    player = new SimpleExoPlayer.Builder(getContext(), enderersFactory)
+                                .setTrackSelector(trackSelector)
+                                .build();
                     player.addListener(self);
                     player.addMetadataOutput(self);
                     exoPlayerView.setPlayer(player);
