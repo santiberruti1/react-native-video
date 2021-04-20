@@ -431,7 +431,7 @@ class ReactExoplayerView extends FrameLayout implements
                     // End DRM
                     // player = ExoPlayerFactory.newSimpleInstance(getContext(), renderersFactory,
                             // trackSelector, defaultLoadControl, drmSessionManager, bandwidthMeter);
-                    player = new SimpleExoPlayer.Builder(getContext(), enderersFactory)
+                    player = new SimpleExoPlayer.Builder(getContext(), renderersFactory)
                                 .setTrackSelector(trackSelector)
                                 .build();
                     player.addListener(self);
