@@ -493,11 +493,12 @@ class ReactExoplayerView extends FrameLayout implements
 
         // DrmSessionManager man = new DefaultDrmSessionManager.Builder();
 
-        // return new DefaultDrmSessionManager.build(drmCallback);
+        return new DefaultDrmSessionManager.Builder()
+                 .build(drmCallback);
 
 
-        return new DefaultDrmSessionManager.Builder(uuid,
-                FrameworkMediaDrm.newInstance(uuid), drmCallback, null, false, 3);
+        // return new DefaultDrmSessionManager.Builder(uuid,
+                // FrameworkMediaDrm.newInstance(uuid), drmCallback, null, false, 3);
     }
 
     private MediaSource buildMediaSource(Uri uri, String overrideExtension) {
