@@ -318,6 +318,9 @@ static int const RCTVideoUnset = -1;
         {
             RCTLog(@"tracks");
             NSLog(@"%@", tracks);
+            NSLog(@"%@", tracks.assetTrack);
+            RCTLog(@"tracks2");
+
 
             // if([metadata.commonKey isEqualToString:@"title"]){
 
