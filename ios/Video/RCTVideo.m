@@ -303,7 +303,11 @@ static int const RCTVideoUnset = -1;
  */
 - (NSNumber *)calculatePlayableDuration
 {
-  // RCTLog(@"Calculate playable Duration");
+  RCTLog(@"Calculate playable Duration");
+  NSLog(@"%@",_player.currentItem.timedMetadata);
+  NSLog(@"%@",player.currentItem.timedMetadata);
+  
+
   AVPlayerItem *video = _player.currentItem;
   if (video.status == AVPlayerItemStatusReadyToPlay) {
     __block CMTimeRange effectiveTimeRange;
