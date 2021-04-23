@@ -309,6 +309,7 @@ static int const RCTVideoUnset = -1;
   
 
   AVPlayerItem *video = _player.currentItem;
+  NSLog(@"%@",video);
 
   for (AVMetadataItem* metadata in video.timedMetadata)
         {
