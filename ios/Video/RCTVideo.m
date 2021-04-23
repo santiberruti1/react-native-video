@@ -289,7 +289,7 @@ static int const RCTVideoUnset = -1;
                            @"atTimescale": [NSNumber numberWithInt:currentTime.timescale],
                            @"currentPlaybackTime": [NSNumber numberWithLongLong:[@(floor([currentPlaybackTime timeIntervalSince1970] * 1000)) longLongValue]],
                            @"target": self.reactTag,
-                           @"seekableDuration": [self calculateSeekableDuration],
+                           @"seekableDuration": [NSNumber numberWithFloat:CMTimeGetSeconds(currentTime)],
                            });
   }
 }
