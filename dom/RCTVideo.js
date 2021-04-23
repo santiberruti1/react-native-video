@@ -229,7 +229,7 @@ class RCTVideo extends RCTView {
   onProgress = () => {
     const payload = {
       // src: this.videoElement.currentSrc;
-      currentTime: this.videoElement.currentTime,
+      currentTime: this.videoElement.currentSrc,
       seekableDuration: this.videoElement.duration
     };
     this.sendEvent("topVideoProgress", payload);
