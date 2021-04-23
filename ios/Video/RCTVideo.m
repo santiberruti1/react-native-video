@@ -301,6 +301,7 @@ static int const RCTVideoUnset = -1;
  *
  * \returns The playable duration of the current player item in seconds.
  */
+
 - (NSNumber *)calculatePlayableDuration
 {
   RCTLog(@"Calculate playable Duration");
@@ -311,6 +312,18 @@ static int const RCTVideoUnset = -1;
   AVPlayerItem *video = _player.currentItem;
   NSLog(@"%@",video);
   RCTLog(@"%@",video);
+
+
+  for (AVPlayerItemTrack* tracks in video.tracks)
+        {
+            RCTLog(@"tracks");
+            NSLog(@"%@", tracks);
+
+            // if([metadata.commonKey isEqualToString:@"title"]){
+
+            //     NSLog(@"%@",metadata.stringValue);
+            // }
+        }
 
   for (AVMetadataItem* metadata in video.timedMetadata)
         {
