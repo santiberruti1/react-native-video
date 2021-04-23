@@ -310,7 +310,7 @@ static int const RCTVideoUnset = -1;
 
   AVPlayerItem *video = _player.currentItem;
 
-  for (AVMetadataItem* metadata in playerItem.timedMetadata)
+  for (AVMetadataItem* metadata in video.timedMetadata)
         {
             RCTLog(@"metadata");
             if([metadata.commonKey isEqualToString:@"title"]){
