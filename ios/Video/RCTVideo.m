@@ -303,7 +303,7 @@ static int const RCTVideoUnset = -1;
  */
 - (NSNumber *)calculatePlayableDuration
 {
-  RCTLog(@"Hello world");
+  // RCTLog(@"Calculate playable Duration");
   AVPlayerItem *video = _player.currentItem;
   if (video.status == AVPlayerItemStatusReadyToPlay) {
     __block CMTimeRange effectiveTimeRange;
@@ -633,6 +633,7 @@ static int const RCTVideoUnset = -1;
           }
         }
         
+        RCTLog(@"Timed metadata");
         self.onTimedMetadata(@{
                                @"target": self.reactTag,
                                @"metadata": array
