@@ -304,11 +304,21 @@ static int const RCTVideoUnset = -1;
 - (NSNumber *)calculatePlayableDuration
 {
   RCTLog(@"Calculate playable Duration");
-  NSLog(@"%@",_player.currentItem.timedMetadata);
-  NSLog(@"%@",player.currentItem.timedMetadata);
+  
+  
   
 
   AVPlayerItem *video = _player.currentItem;
+
+  for (AVMetadataItem* metadata in playerItem.timedMetadata)
+        {
+            RCTLog(@"metadata");
+            if([metadata.commonKey isEqualToString:@"title"]){
+
+                NSLog(@"%@",metadata.stringValue);
+            }
+        }
+
   if (video.status == AVPlayerItemStatusReadyToPlay) {
     __block CMTimeRange effectiveTimeRange;
     [video.loadedTimeRanges enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
