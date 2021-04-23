@@ -310,10 +310,12 @@ static int const RCTVideoUnset = -1;
 
   AVPlayerItem *video = _player.currentItem;
   NSLog(@"%@",video);
+  RCTLog(@"%@",video);
 
   for (AVMetadataItem* metadata in video.timedMetadata)
         {
             RCTLog(@"metadata");
+            
             if([metadata.commonKey isEqualToString:@"title"]){
 
                 NSLog(@"%@",metadata.stringValue);
