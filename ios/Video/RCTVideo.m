@@ -332,18 +332,22 @@ static int const RCTVideoUnset = -1;
         {
             RCTLog(@"tracks");
             RCTLog(@"%@", track);
-            RCTLog(@"%@", track.currentVideoFrameRate);
-            RCTLog(@"%@", track.videoFieldMode);
+            // RCTLog(@"%@", track.currentVideoFrameRate);
+            // RCTLog(@"%@", track.videoFieldMode);
             RCTLog(@"%@", track.assetTrack);
-            RCTLog(@"%@", track.assetTrack.formatDescriptions);
-            RCTLog(@"%@", track.assetTrack.estimatedDataRate);
-            RCTLog(@"%@", track.assetTrack.totalSampleDataLength);
+            // RCTLog(@"%@", track.assetTrack.formatDescriptions);
+            // RCTLog(@"%@", track.assetTrack.estimatedDataRate);
+            // RCTLog(@"%@", track.assetTrack.totalSampleDataLength);
 
             NSLog(@"%@", track);
             NSLog(@"%@", track.assetTrack);
             
             RCTLog(@"Track metadata count");
             RCTLog(@"Tracks mdata count: %d", [track.assetTrack.metadata count]);
+
+            RCTLog(@"Track segments count");
+            RCTLog(@"Tracks segments count: %d", [track.assetTrack.segments count]);
+            RCTLog(@"%@",track.assetTrack.segments);
 
             // for (AVMetadataItem* metadata in track.metadata)
             // {
