@@ -378,15 +378,8 @@ static int const RCTVideoUnset = -1;
 
  @try {
     RCTLog(@"%@",lastEvent.URI);
- }
- @catch (NSException *exception) {
-    RCTLog(@"%@", exception.reason);
-    RCTLog(@"Char at index %d cannot be found", index);
-    RCTLog(@"Max index is: %lu", [test length] - 1);
- }
- @finally {
-    RCTLog(@"Finally condition");
- }
+  }@catch(id anException){
+    }
 
   for (AVMetadataItem* metadata in video.timedMetadata)
         {
