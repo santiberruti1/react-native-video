@@ -877,6 +877,8 @@ static int const RCTVideoUnset = -1;
 
   AVPlayerItemAccessLog *accessLog = [((AVPlayerItem *)notification.object) accessLog];
   AVPlayerItemAccessLogEvent *lastEvent = accessLog.events.lastObject;
+
+  RCTLog(@"%@",lastEvent);
   
 
   /* TODO: get this working
