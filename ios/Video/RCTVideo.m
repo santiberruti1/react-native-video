@@ -306,8 +306,8 @@ static int const RCTVideoUnset = -1;
 {
   RCTLog(@"Calculate playable Duration");
   
-  AVPlayerItemAccessLog *accessLog = [((AVPlayerItem *)_player.currentItem) accessLog]
-  AVPlayerItemAccessLogEvent *lastEvent = accessLog.events.lastObject;
+  // AVPlayerItemAccessLog *accessLog = [((AVPlayerItem *)_player.currentItem) accessLog]
+  // AVPlayerItemAccessLogEvent *lastEvent = accessLog.events.lastObject;
   
   // NSLog(@"bitrate: %@": [NSNumber numberWithFloat:lastEvent.observedBitrate]);
   /* TODO: get this working
@@ -322,6 +322,7 @@ static int const RCTVideoUnset = -1;
   AVPlayerItem *video = _player.currentItem;
   NSLog(@"%@",video);
   RCTLog(@"%@",video);
+  RCTLog(@"Tracks count: %@", _player.currentItem.tracks.count);
 
 
   for (AVPlayerItemTrack* tracks in video.tracks)
