@@ -879,8 +879,9 @@ static int const RCTVideoUnset = -1;
   AVPlayerItemAccessLogEvent *lastEvent = accessLog.events.lastObject;
 
   RCTLog(@"%@",lastEvent);
-  RCTLog(@"%@",lastEvent.URI);
   RCTLog(@"%@",lastEvent.indicatedBitrate);
+  RCTLog(@"%@",lastEvent.URI);
+  
 
   /* TODO: get this working
    if (self.onBandwidthUpdate) {
