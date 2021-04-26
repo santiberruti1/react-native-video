@@ -872,9 +872,13 @@ static int const RCTVideoUnset = -1;
 }
 
 - (void)handleAVPlayerAccess:(NSNotification *)notification {
+
+  RCTLog(@"Handle AVPlayerAccess");
+
   AVPlayerItemAccessLog *accessLog = [((AVPlayerItem *)notification.object) accessLog];
   AVPlayerItemAccessLogEvent *lastEvent = accessLog.events.lastObject;
   
+
   /* TODO: get this working
    if (self.onBandwidthUpdate) {
    self.onBandwidthUpdate(@{@"bitrate": [NSNumber numberWithFloat:lastEvent.observedBitrate]});
