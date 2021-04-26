@@ -328,14 +328,29 @@ static int const RCTVideoUnset = -1;
   // RCTLog(@"Tracks count: %@", _player.currentItem.tracks.count);
 
 
-  for (AVPlayerItemTrack* tracks in video.tracks)
+  for (AVPlayerItemTrack* track in video.tracks)
         {
             RCTLog(@"tracks");
-            RCTLog(@"%@", tracks);
-            RCTLog(@"%@", tracks.assetTrack);
-            NSLog(@"%@", tracks);
-            NSLog(@"%@", tracks.assetTrack);
+            RCTLog(@"%@", track);
+            RCTLog(@"%@", track.assetTrack);
+            NSLog(@"%@", track);
+            NSLog(@"%@", track.assetTrack);
+            
+            RCTLog(@"Track metadata count");
+            RCTLog(@"Tracks mdata count: %d", [track.metadata count]);
+
+            for (AVMetadataItem* metadata in track.metadata)
+            {
+                RCTLog(@"metadata Track");
+                
+                if([metadata.commonKey isEqualToString:@"title"]){
+
+                    NSLog(@"%@",metadata.stringValue);
+                }
+            }
+
             RCTLog(@"tracks2");
+            
 
 
             // if([metadata.commonKey isEqualToString:@"title"]){
