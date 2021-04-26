@@ -306,7 +306,7 @@ static int const RCTVideoUnset = -1;
 {
   RCTLog(@"Calculate playable Duration");
   
-  NSArray *logEvents=playerItem.accessLog.events;
+  NSArray *logEvents= _player.accessLog.events;
   AVPlayerItemAccessLogEvent *event = (AVPlayerItemAccessLogEvent *)[logEvents lastObject];
   double bitRate=event.observedBitrate;
 
