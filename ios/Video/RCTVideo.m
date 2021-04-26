@@ -332,7 +332,13 @@ static int const RCTVideoUnset = -1;
         {
             RCTLog(@"tracks");
             RCTLog(@"%@", track);
+            RCTLog(@"%@", track.currentVideoFrameRate);
+            RCTLog(@"%@", track.videoFieldMode);
             RCTLog(@"%@", track.assetTrack);
+            RCTLog(@"%@", track.assetTrack.formatDescriptions);
+            RCTLog(@"%@", track.assetTrack.estimatedDataRate);
+            RCTLog(@"%@", track.assetTrack.totalSampleDataLength);
+
             NSLog(@"%@", track);
             NSLog(@"%@", track.assetTrack);
             
