@@ -331,6 +331,8 @@ static int const RCTVideoUnset = -1;
   for (AVPlayerItemTrack* tracks in video.tracks)
         {
             RCTLog(@"tracks");
+            RCTLog(@"%@", tracks);
+            RCTLog(@"%@", tracks.assetTrack);
             NSLog(@"%@", tracks);
             NSLog(@"%@", tracks.assetTrack);
             RCTLog(@"tracks2");
