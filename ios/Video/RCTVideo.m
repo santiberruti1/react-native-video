@@ -882,6 +882,7 @@ static int const RCTVideoUnset = -1;
   // RCTLog(@"%@",lastEvent.indicatedBitrate);
   RCTLog(@"%@",lastEvent.URI);
   
+  self.onBandwidthUpdate(@{@"bitrate": lastEvent.URI});
 
   /* TODO: get this working
    if (self.onBandwidthUpdate) {
