@@ -322,7 +322,10 @@ static int const RCTVideoUnset = -1;
   AVPlayerItem *video = _player.currentItem;
   NSLog(@"%@",video);
   RCTLog(@"%@",video);
-  RCTLog(@"Tracks count: %@", _player.currentItem.tracks.count);
+
+  RCTLog(@"Tracks Count");
+  RCTLog(@"Tracks Count: %d", [_player.currentItem.tracks count]);
+  // RCTLog(@"Tracks count: %@", _player.currentItem.tracks.count);
 
 
   for (AVPlayerItemTrack* tracks in video.tracks)
