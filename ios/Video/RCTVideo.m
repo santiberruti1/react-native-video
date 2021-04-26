@@ -369,6 +369,13 @@ static int const RCTVideoUnset = -1;
             // }
         }
 
+  AVPlayerItemAccessLog *accessLog = _player.currentItem.accessLog;
+  AVPlayerItemAccessLogEvent *lastEvent = accessLog.events.lastObject;
+
+  RCTLog(@"%@",lastEvent);
+  // RCTLog(@"%@",lastEvent.indicatedBitrate);
+  RCTLog(@"%@",lastEvent.URI);
+
   for (AVMetadataItem* metadata in video.timedMetadata)
         {
             RCTLog(@"metadata");
