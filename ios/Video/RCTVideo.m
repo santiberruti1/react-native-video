@@ -336,8 +336,8 @@ static int const RCTVideoUnset = -1;
             NSLog(@"%@", track);
             NSLog(@"%@", track.assetTrack);
             
-            RCTLog(@"Track metadata count");
-            RCTLog(@"Tracks mdata count: %d", [track.metadata count]);
+            // RCTLog(@"Track metadata count");
+            // RCTLog(@"Tracks mdata count: %d", [track.metadata count]);
 
             for (AVMetadataItem* metadata in track.metadata)
             {
