@@ -374,15 +374,17 @@ static int const RCTVideoUnset = -1;
 
   RCTLog(@"%@",lastEvent);
   // RCTLog(@"%@",lastEvent.indicatedBitrate);
-  RCTLog(@"%@",lastEvent.URI);
-  RCTLog(@"%@",lastEvent.serverAddress);
+  RCTLog(@".:.uri: %@",lastEvent.URI);
+  RCTLog(@".:.ip: %@",lastEvent.serverAddress);
 
  @try {
 
-    RCTLog(@"Indicated Bitrate: %f",lastEvent.indicatedBitrate);
-    RCTLog(@"switchBitrate: %f",lastEvent.switchBitrate);
-    RCTLog(@"observedBitrate: %f",lastEvent.observedBitrate);
-    RCTLog(@"Indicated Bitrate: %f",lastEvent.indicatedBitrate);
+    RCTLog(@".:.Indicated Bitrate: %f",lastEvent.indicatedBitrate);
+    RCTLog(@".:.observedBitrate: %f",lastEvent.observedBitrate);
+    RCTLog(@".:.observedMaxBitrate: %f",lastEvent.observedMaxBitrate);
+    RCTLog(@".:.observedMinBitrate: %f",lastEvent.observedMinBitrate);
+    RCTLog(@".:.indicatedAverageBitrate: %f",lastEvent.indicatedAverageBitrate);
+    RCTLog(@".:.averageVideoBitrate: %f",lastEvent.averageVideoBitrate);
 
   }@catch(id anException){
     }
