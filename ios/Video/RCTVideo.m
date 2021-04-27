@@ -287,7 +287,7 @@ static int const RCTVideoUnset = -1;
     self.onVideoProgress(@{
                            @"currentTime": [NSNumber numberWithFloat:CMTimeGetSeconds(currentTime)],
                            @"playableDuration": [self calculatePlayableDuration],
-                           @"atValue": [NSNumber numberWithLongLong:currentTime.value],
+                           @"atValue1": [NSNumber numberWithLongLong:currentTime.value],
                            @"atTimescale": [NSNumber numberWithInt:currentTime.timescale],
                            @"currentPlaybackTime": [NSNumber numberWithLongLong:[@(floor([currentPlaybackTime timeIntervalSince1970] * 1000)) longLongValue]],
                            @"target": self.reactTag,
