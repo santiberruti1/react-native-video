@@ -287,12 +287,15 @@ static int const RCTVideoUnset = -1;
     self.onVideoProgress(@{
                            @"currentTime": [NSNumber numberWithFloat:CMTimeGetSeconds(currentTime)],
                            @"playableDuration": [self calculatePlayableDuration],
-                           @"atValue": [self calculateObservedBitrate],
+                           @"atValue": [NSNumber numberWithLongLong:currentTime.value],
                            @"atTimescale": [NSNumber numberWithInt:currentTime.timescale],
                            @"currentPlaybackTime": [NSNumber numberWithLongLong:[@(floor([currentPlaybackTime timeIntervalSince1970] * 1000)) longLongValue]],
                            @"target": self.reactTag,
                            @"seekableDuration": [self calculateSeekableDuration],
+                           @"indictaedBitrate": [self calculateIndicatedBitrate],
                            @"observedBitrate": [self calculateObservedBitrate],
+                           @"observedMaxBitrate": [self calculateObservedMaxBitrate],
+                           @"observedMinBitrate": [self calculateObservedMinBitrate],
                            });
   }
 }
@@ -308,6 +311,60 @@ static int const RCTVideoUnset = -1;
     AVPlayerItemAccessLogEvent *lastEvent = accessLog.events.lastObject;
     
     double bitrate = lastEvent.observedBitrate;
+    if (bitrate > 0) {
+      return [NSNumber numberWithInteger:bitrate];
+    }
+  }
+  return [NSNumber numberWithInteger:0];
+}
+
+- (NSNumber *)calculateIndicatedBitrate
+{
+
+  AVPlayerItem *video = _player.currentItem;
+
+  if (video.status == AVPlayerItemStatusReadyToPlay) {
+
+    AVPlayerItemAccessLog *accessLog = _player.currentItem.accessLog;
+    AVPlayerItemAccessLogEvent *lastEvent = accessLog.events.lastObject;
+    
+    double bitrate = lastEvent.indicatedBitrate;
+    if (bitrate > 0) {
+      return [NSNumber numberWithInteger:bitrate];
+    }
+  }
+  return [NSNumber numberWithInteger:0];
+}
+
+- (NSNumber *)calculateObservedMaxBitrate
+{
+
+  AVPlayerItem *video = _player.currentItem;
+
+  if (video.status == AVPlayerItemStatusReadyToPlay) {
+
+    AVPlayerItemAccessLog *accessLog = _player.currentItem.accessLog;
+    AVPlayerItemAccessLogEvent *lastEvent = accessLog.events.lastObject;
+    
+    double bitrate = lastEvent.observedMaxBitrate;
+    if (bitrate > 0) {
+      return [NSNumber numberWithInteger:bitrate];
+    }
+  }
+  return [NSNumber numberWithInteger:0];
+}
+
+- (NSNumber *)calculateObservedMinBitrate
+{
+
+  AVPlayerItem *video = _player.currentItem;
+
+  if (video.status == AVPlayerItemStatusReadyToPlay) {
+
+    AVPlayerItemAccessLog *accessLog = _player.currentItem.accessLog;
+    AVPlayerItemAccessLogEvent *lastEvent = accessLog.events.lastObject;
+    
+    double bitrate = lastEvent.observedMinBitrate;
     if (bitrate > 0) {
       return [NSNumber numberWithInteger:bitrate];
     }
