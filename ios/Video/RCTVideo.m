@@ -287,14 +287,34 @@ static int const RCTVideoUnset = -1;
     self.onVideoProgress(@{
                            @"currentTime": [NSNumber numberWithFloat:CMTimeGetSeconds(currentTime)],
                            @"playableDuration": [self calculatePlayableDuration],
-                           @"atValue1": [NSNumber numberWithLongLong:currentTime.value],
+                           @"atValue": [self calculateObservedBitrate],
                            @"atTimescale": [NSNumber numberWithInt:currentTime.timescale],
                            @"currentPlaybackTime": [NSNumber numberWithLongLong:[@(floor([currentPlaybackTime timeIntervalSince1970] * 1000)) longLongValue]],
                            @"target": self.reactTag,
                            @"seekableDuration": [self calculateSeekableDuration],
+                           @"observedBitrate": [self calculateObservedBitrate],
                            });
   }
 }
+
+- (NSNumber *)calculateObservedBitrate
+{
+
+  AVPlayerItem *video = _player.currentItem;
+
+  if (video.status == AVPlayerItemStatusReadyToPlay) {
+
+    AVPlayerItemAccessLog *accessLog = _player.currentItem.accessLog;
+    AVPlayerItemAccessLogEvent *lastEvent = accessLog.events.lastObject;
+    
+    double bitrate = lastEvent.observedBitrate;
+    if (bitrate > 0) {
+      return [NSNumber numberWithInteger:bitrate];
+    }
+  }
+  return [NSNumber numberWithInteger:0];
+}
+
 
 /*!
  * Calculates and returns the playable duration of the current player item using its loaded time ranges.
