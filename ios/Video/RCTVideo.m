@@ -375,11 +375,15 @@ static int const RCTVideoUnset = -1;
   RCTLog(@"%@",lastEvent);
   // RCTLog(@"%@",lastEvent.indicatedBitrate);
   RCTLog(@"%@",lastEvent.URI);
+  RCTLog(@"%@",lastEvent.serverAddress);
 
  @try {
-   RCTLog(@"BitRate1");
+
     RCTLog(@"Indicated Bitrate: %f",lastEvent.indicatedBitrate);
-    RCTLog(@"BitRate2");
+    RCTLog(@"switchBitrate: %f",lastEvent.switchBitrate);
+    RCTLog(@"observedBitrate: %f",lastEvent.observedBitrate);
+    RCTLog(@"Indicated Bitrate: %f",lastEvent.indicatedBitrate);
+
   }@catch(id anException){
     }
 
