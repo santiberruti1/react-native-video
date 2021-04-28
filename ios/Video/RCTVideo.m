@@ -292,7 +292,7 @@ static int const RCTVideoUnset = -1;
                            @"currentPlaybackTime": [NSNumber numberWithLongLong:[@(floor([currentPlaybackTime timeIntervalSince1970] * 1000)) longLongValue]],
                            @"target": self.reactTag,
                            @"seekableDuration": [self calculateSeekableDuration],
-                           @"indictaedBitrate": [self calculateIndicatedBitrate],
+                           @"indicatedBitrate": [self calculateIndicatedBitrate],
                            @"observedBitrate": [self calculateObservedBitrate],
                            @"observedMaxBitrate": [self calculateObservedMaxBitrate],
                            @"observedMinBitrate": [self calculateObservedMinBitrate],
