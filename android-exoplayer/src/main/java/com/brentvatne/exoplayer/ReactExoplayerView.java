@@ -182,7 +182,10 @@ class ReactExoplayerView extends FrameLayout implements
                              
                         Log.d("Mux", "progress Changed");
                         Log.d("Mux", "Current Manifest: " + player.getCurrentManifest());
-                        Log.d("Mux", "  ");
+                        Log.d("Mux", "videoFormat.bitrate: " + player.getVideoFormat().bitrate);
+                        Log.d("Mux", "videoFormat.averageBitrate: " + player.getVideoFormat().averageBitrate);
+                        Log.d("Mux", "videoFormat.metadata: " + player.getVideoFormat().metadata);
+                        Log.d("Mux", "----------------");
 
 
                         long pos = player.getCurrentPosition();
