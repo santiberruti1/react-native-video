@@ -187,10 +187,10 @@ class ReactExoplayerView extends FrameLayout implements
                         Log.d("Mux", "videoFormat.metadata: " + player.getVideoFormat().metadata);
                         Log.d("Mux", "----------------");
 
-
+                        int indicatedBitrate = player.getVideoFormat().bitrate; //Bitrate neccesary for the playlist (HLS)
                         long pos = player.getCurrentPosition();
                         long bufferedDuration = player.getBufferedPercentage() * player.getDuration() / 100;
-                        eventEmitter.progressChanged(pos, bufferedDuration, player.getDuration(), getPositionInFirstPeriodMsForCurrentWindow(pos));
+                        eventEmitter.progressChanged(pos, bufferedDuration, player.getDuration(), getPositionInFirstPeriodMsForCurrentWindow(pos), indicatedBitrate);
                         msg = obtainMessage(SHOW_PROGRESS);
                         sendMessageDelayed(msg, Math.round(mProgressUpdateInterval));
                     }
