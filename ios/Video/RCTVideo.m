@@ -452,23 +452,23 @@ static int const RCTVideoUnset = -1;
 
   // RCTLog(@"%@",lastEvent);
   // RCTLog(@"%@",lastEvent.indicatedBitrate);
-  RCTLog(@".:.----------------");
-  RCTLog(@".:.uri: %@",lastEvent.URI);
-  RCTLog(@".:.ip: %@",lastEvent.serverAddress);
+//   RCTLog(@".:.----------------");
+//   RCTLog(@".:.uri: %@",lastEvent.URI);
+//   RCTLog(@".:.ip: %@",lastEvent.serverAddress);
 
- @try {
+//  @try {
 
-    RCTLog(@".:.Indicated Bitrate: %f",lastEvent.indicatedBitrate);
-    RCTLog(@".:.observedBitrate: %f",lastEvent.observedBitrate);
-    RCTLog(@".:.observedMaxBitrate: %f",lastEvent.observedMaxBitrate);
-    RCTLog(@".:.observedMinBitrate: %f",lastEvent.observedMinBitrate);
-    RCTLog(@".:.indicatedAverageBitrate: %f",lastEvent.indicatedAverageBitrate);
-    RCTLog(@".:.averageVideoBitrate: %f",lastEvent.averageVideoBitrate);
+//     RCTLog(@".:.Indicated Bitrate: %f",lastEvent.indicatedBitrate);
+//     RCTLog(@".:.observedBitrate: %f",lastEvent.observedBitrate);
+//     RCTLog(@".:.observedMaxBitrate: %f",lastEvent.observedMaxBitrate);
+//     RCTLog(@".:.observedMinBitrate: %f",lastEvent.observedMinBitrate);
+//     RCTLog(@".:.indicatedAverageBitrate: %f",lastEvent.indicatedAverageBitrate);
+//     RCTLog(@".:.averageVideoBitrate: %f",lastEvent.averageVideoBitrate);
 
-    RCTLog(@".:.----------------");
+//     RCTLog(@".:.----------------");
 
-  }@catch(id anException){
-    }
+//   }@catch(id anException){
+//     }
 
   for (AVMetadataItem* metadata in video.timedMetadata)
         {
@@ -974,14 +974,14 @@ static int const RCTVideoUnset = -1;
 
 - (void)handleAVPlayerAccess:(NSNotification *)notification {
 
-  RCTLog(@"Handle AVPlayerAccess");
+  // RCTLog(@"Handle AVPlayerAccess");
 
   AVPlayerItemAccessLog *accessLog = [((AVPlayerItem *)notification.object) accessLog];
   AVPlayerItemAccessLogEvent *lastEvent = accessLog.events.lastObject;
 
-  RCTLog(@"%@",lastEvent);
-  // RCTLog(@"%@",lastEvent.indicatedBitrate);
-  RCTLog(@"%@",lastEvent.URI);
+  // RCTLog(@"%@",lastEvent);
+  // // RCTLog(@"%@",lastEvent.indicatedBitrate);
+  // RCTLog(@"%@",lastEvent.URI);
   
   self.onBandwidthUpdate(@{@"bitrate": lastEvent.URI});
 

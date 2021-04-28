@@ -180,12 +180,12 @@ class ReactExoplayerView extends FrameLayout implements
                             ) {
 
                              
-                        Log.d("Mux", "progress Changed");
-                        Log.d("Mux", "Current Manifest: " + player.getCurrentManifest());
-                        Log.d("Mux", "videoFormat.bitrate: " + player.getVideoFormat().bitrate);
-                        Log.d("Mux", "videoFormat.averageBitrate: " + player.getVideoFormat().averageBitrate);
-                        Log.d("Mux", "videoFormat.metadata: " + player.getVideoFormat().metadata);
-                        Log.d("Mux", "----------------");
+                        // Log.d("Mux", "progress Changed");
+                        // Log.d("Mux", "Current Manifest: " + player.getCurrentManifest());
+                        // Log.d("Mux", "videoFormat.bitrate: " + player.getVideoFormat().bitrate);
+                        // Log.d("Mux", "videoFormat.averageBitrate: " + player.getVideoFormat().averageBitrate);
+                        // Log.d("Mux", "videoFormat.metadata: " + player.getVideoFormat().metadata);
+                        // Log.d("Mux", "----------------");
 
                         int indicatedBitrate = player.getVideoFormat().bitrate; //Bitrate neccesary for the playlist (HLS)
                         long pos = player.getCurrentPosition();
