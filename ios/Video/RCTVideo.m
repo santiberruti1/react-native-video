@@ -456,19 +456,19 @@ static int const RCTVideoUnset = -1;
 //   RCTLog(@".:.uri: %@",lastEvent.URI);
 //   RCTLog(@".:.ip: %@",lastEvent.serverAddress);
 
-//  @try {
+ @try {
 
-//     RCTLog(@".:.Indicated Bitrate: %f",lastEvent.indicatedBitrate);
-//     RCTLog(@".:.observedBitrate: %f",lastEvent.observedBitrate);
-//     RCTLog(@".:.observedMaxBitrate: %f",lastEvent.observedMaxBitrate);
-//     RCTLog(@".:.observedMinBitrate: %f",lastEvent.observedMinBitrate);
-//     RCTLog(@".:.indicatedAverageBitrate: %f",lastEvent.indicatedAverageBitrate);
-//     RCTLog(@".:.averageVideoBitrate: %f",lastEvent.averageVideoBitrate);
+    RCTLog(@".:.Indicated Bitrate: %f",lastEvent.indicatedBitrate);
+    RCTLog(@".:.observedBitrate: %f",lastEvent.observedBitrate);
+    RCTLog(@".:.observedMaxBitrate: %f",lastEvent.observedMaxBitrate);
+    RCTLog(@".:.observedMinBitrate: %f",lastEvent.observedMinBitrate);
+    RCTLog(@".:.indicatedAverageBitrate: %f",lastEvent.indicatedAverageBitrate);
+    RCTLog(@".:.averageVideoBitrate: %f",lastEvent.averageVideoBitrate);
 
-//     RCTLog(@".:.----------------");
+    RCTLog(@".:.----------------");
 
-//   }@catch(id anException){
-//     }
+  }@catch(id anException){
+    }
 
   for (AVMetadataItem* metadata in video.timedMetadata)
         {
