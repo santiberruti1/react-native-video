@@ -381,94 +381,11 @@ static int const RCTVideoUnset = -1;
 
 - (NSNumber *)calculatePlayableDuration
 {
-  // RCTLog(@"Calculate playable Duration");
-  
-  // // AVPlayerItemAccessLog *accessLog = [((AVPlayerItem *)_player.currentItem) accessLog]
-  // // AVPlayerItemAccessLogEvent *lastEvent = accessLog.events.lastObject;
-  
-  // // NSLog(@"bitrate: %@": [NSNumber numberWithFloat:lastEvent.observedBitrate]);
-  // /* TODO: get this working
-  //  if (self.onBandwidthUpdate) {
-  //  self.onBandwidthUpdate(@{@"bitrate": [NSNumber numberWithFloat:lastEvent.observedBitrate]});
-  //  }
-  //  */
-
-  
-  
-
-  // AVPlayerItem *video = _player.currentItem;
-  // NSLog(@"%@",video);
-  // RCTLog(@"%@",video);
-
-  // RCTLog(@"Tracks Count");
-  // RCTLog(@"Tracks Count: %d", [_player.currentItem.tracks count]);
-  // // RCTLog(@"Tracks count: %@", _player.currentItem.tracks.count);
-
-
-  // for (AVPlayerItemTrack* track in video.tracks)
-  //       {
-  //           RCTLog(@"tracks");
-  //           RCTLog(@"%@", track);
-  //           // RCTLog(@"%@", track.currentVideoFrameRate);
-  //           // RCTLog(@"%@", track.videoFieldMode);
-  //           RCTLog(@"%@", track.assetTrack);
-  //           // RCTLog(@"%@", track.assetTrack.formatDescriptions);
-  //           // RCTLog(@"%@", track.assetTrack.estimatedDataRate);
-  //           // RCTLog(@"%@", track.assetTrack.totalSampleDataLength);
-
-  //           NSLog(@"%@", track);
-  //           NSLog(@"%@", track.assetTrack);
-            
-  //           RCTLog(@"Track metadata count");
-  //           RCTLog(@"Tracks mdata count: %d", [track.assetTrack.metadata count]);
-
-  //           RCTLog(@"Track segments count");
-  //           RCTLog(@"Tracks segments count: %d", [track.assetTrack.segments count]);
-  //           RCTLog(@"%@",track.assetTrack.segments);
-
-  //           // for (AVMetadataItem* metadata in track.metadata)
-  //           // {
-  //           //     RCTLog(@"metadata Track");
-                
-  //           //     if([metadata.commonKey isEqualToString:@"title"]){
-
-  //           //         NSLog(@"%@",metadata.stringValue);
-  //           //     }
-  //           // }
-
-  //           RCTLog(@"tracks2");
-            
-
-
-  //           // if([metadata.commonKey isEqualToString:@"title"]){
-
-  //           //     NSLog(@"%@",metadata.stringValue);
-  //           // }
-  //       }
 
   AVPlayerItem *video = _player.currentItem;
   AVPlayerItemAccessLog *accessLog = _player.currentItem.accessLog;
   AVPlayerItemAccessLogEvent *lastEvent = accessLog.events.lastObject;
 
-  // RCTLog(@"%@",lastEvent);
-  // RCTLog(@"%@",lastEvent.indicatedBitrate);
-//   RCTLog(@".:.----------------");
-//   RCTLog(@".:.uri: %@",lastEvent.URI);
-//   RCTLog(@".:.ip: %@",lastEvent.serverAddress);
-
-//  @try {
-
-//     RCTLog(@".:.Indicated Bitrate: %f",lastEvent.indicatedBitrate);
-//     RCTLog(@".:.observedBitrate: %f",lastEvent.observedBitrate);
-//     RCTLog(@".:.observedMaxBitrate: %f",lastEvent.observedMaxBitrate);
-//     RCTLog(@".:.observedMinBitrate: %f",lastEvent.observedMinBitrate);
-//     RCTLog(@".:.indicatedAverageBitrate: %f",lastEvent.indicatedAverageBitrate);
-//     RCTLog(@".:.averageVideoBitrate: %f",lastEvent.averageVideoBitrate);
-
-//     RCTLog(@".:.----------------");
-
-//   }@catch(id anException){
-//     }
 
   for (AVMetadataItem* metadata in video.timedMetadata)
         {
