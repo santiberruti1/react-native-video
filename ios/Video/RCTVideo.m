@@ -3,8 +3,10 @@
 #import <React/RCTBridgeModule.h>
 #import <React/RCTEventDispatcher.h>
 #import <React/UIView+React.h>
+#import <React/RCTLog.h>
 #include <MediaAccessibility/MediaAccessibility.h>
 #include <AVFoundation/AVFoundation.h>
+
 
 static NSString *const statusKeyPath = @"status";
 static NSString *const playbackLikelyToKeepUpKeyPath = @"playbackLikelyToKeepUp";
@@ -290,18 +292,111 @@ static int const RCTVideoUnset = -1;
                            @"currentPlaybackTime": [NSNumber numberWithLongLong:[@(floor([currentPlaybackTime timeIntervalSince1970] * 1000)) longLongValue]],
                            @"target": self.reactTag,
                            @"seekableDuration": [self calculateSeekableDuration],
+                           @"indicatedBitrate": [self calculateIndicatedBitrate],
+                           @"observedBitrate": [self calculateObservedBitrate],
+                           @"observedMaxBitrate": [self calculateObservedMaxBitrate],
+                           @"observedMinBitrate": [self calculateObservedMinBitrate],
                            });
   }
 }
+
+- (NSNumber *)calculateObservedBitrate
+{
+
+  AVPlayerItem *video = _player.currentItem;
+
+  if (video.status == AVPlayerItemStatusReadyToPlay) {
+
+    AVPlayerItemAccessLog *accessLog = _player.currentItem.accessLog;
+    AVPlayerItemAccessLogEvent *lastEvent = accessLog.events.lastObject;
+    
+    double bitrate = lastEvent.observedBitrate;
+    if (bitrate > 0) {
+      return [NSNumber numberWithInteger:bitrate];
+    }
+  }
+  return [NSNumber numberWithInteger:0];
+}
+
+- (NSNumber *)calculateIndicatedBitrate
+{
+
+  AVPlayerItem *video = _player.currentItem;
+
+  if (video.status == AVPlayerItemStatusReadyToPlay) {
+
+    AVPlayerItemAccessLog *accessLog = _player.currentItem.accessLog;
+    AVPlayerItemAccessLogEvent *lastEvent = accessLog.events.lastObject;
+    
+    double bitrate = lastEvent.indicatedBitrate;
+    if (bitrate > 0) {
+      return [NSNumber numberWithInteger:bitrate];
+    }
+  }
+  return [NSNumber numberWithInteger:0];
+}
+
+- (NSNumber *)calculateObservedMaxBitrate
+{
+
+  AVPlayerItem *video = _player.currentItem;
+
+  if (video.status == AVPlayerItemStatusReadyToPlay) {
+
+    AVPlayerItemAccessLog *accessLog = _player.currentItem.accessLog;
+    AVPlayerItemAccessLogEvent *lastEvent = accessLog.events.lastObject;
+    
+    double bitrate = lastEvent.observedMaxBitrate;
+    if (bitrate > 0) {
+      return [NSNumber numberWithInteger:bitrate];
+    }
+  }
+  return [NSNumber numberWithInteger:0];
+}
+
+- (NSNumber *)calculateObservedMinBitrate
+{
+
+  AVPlayerItem *video = _player.currentItem;
+
+  if (video.status == AVPlayerItemStatusReadyToPlay) {
+
+    AVPlayerItemAccessLog *accessLog = _player.currentItem.accessLog;
+    AVPlayerItemAccessLogEvent *lastEvent = accessLog.events.lastObject;
+    
+    double bitrate = lastEvent.observedMinBitrate;
+    if (bitrate > 0) {
+      return [NSNumber numberWithInteger:bitrate];
+    }
+  }
+  return [NSNumber numberWithInteger:0];
+}
+
 
 /*!
  * Calculates and returns the playable duration of the current player item using its loaded time ranges.
  *
  * \returns The playable duration of the current player item in seconds.
  */
+
 - (NSNumber *)calculatePlayableDuration
 {
+
   AVPlayerItem *video = _player.currentItem;
+  AVPlayerItemAccessLog *accessLog = _player.currentItem.accessLog;
+  AVPlayerItemAccessLogEvent *lastEvent = accessLog.events.lastObject;
+
+
+  for (AVMetadataItem* metadata in video.timedMetadata)
+        {
+            RCTLog(@"metadata");
+            
+            if([metadata.commonKey isEqualToString:@"title"]){
+
+                NSLog(@"%@",metadata.stringValue);
+            }
+        }
+
   if (video.status == AVPlayerItemStatusReadyToPlay) {
     __block CMTimeRange effectiveTimeRange;
     [video.loadedTimeRanges enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
@@ -630,6 +725,7 @@ static int const RCTVideoUnset = -1;
           }
         }
         
+        RCTLog(@"Timed metadata");
         self.onTimedMetadata(@{
                                @"target": self.reactTag,
                                @"metadata": array
@@ -794,9 +890,18 @@ static int const RCTVideoUnset = -1;
 }
 
 - (void)handleAVPlayerAccess:(NSNotification *)notification {
+
+  // RCTLog(@"Handle AVPlayerAccess");
+
   AVPlayerItemAccessLog *accessLog = [((AVPlayerItem *)notification.object) accessLog];
   AVPlayerItemAccessLogEvent *lastEvent = accessLog.events.lastObject;
+
+  // RCTLog(@"%@",lastEvent);
+  // // RCTLog(@"%@",lastEvent.indicatedBitrate);
+  // RCTLog(@"%@",lastEvent.URI);
   
+  self.onBandwidthUpdate(@{@"bitrate": lastEvent.URI});
+
   /* TODO: get this working
    if (self.onBandwidthUpdate) {
    self.onBandwidthUpdate(@{@"bitrate": [NSNumber numberWithFloat:lastEvent.observedBitrate]});

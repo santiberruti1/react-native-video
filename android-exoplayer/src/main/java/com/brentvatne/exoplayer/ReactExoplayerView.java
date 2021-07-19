@@ -15,6 +15,7 @@ import android.view.accessibility.CaptioningManager;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 
+
 import com.brentvatne.react.R;
 import com.brentvatne.receiver.AudioBecomingNoisyReceiver;
 import com.brentvatne.receiver.BecomingNoisyListener;
@@ -30,14 +31,18 @@ import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.DefaultRenderersFactory;
 import com.google.android.exoplayer2.ExoPlaybackException;
-import com.google.android.exoplayer2.ExoPlayerFactory;
+// import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.Format;
 import com.google.android.exoplayer2.PlaybackParameters;
 import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.Timeline;
 import com.google.android.exoplayer2.drm.DefaultDrmSessionManager;
-import com.google.android.exoplayer2.drm.DefaultDrmSessionEventListener;
+import com.google.android.exoplayer2.drm.DefaultDrmSessionManager.Builder;
+
+// import com.google.android.exoplayer2.drm.DefaultDrmSessionEventListener;
+import com.google.android.exoplayer2.drm.DrmSessionEventListener;
+
 import com.google.android.exoplayer2.drm.DrmSessionManager;
 import com.google.android.exoplayer2.drm.FrameworkMediaCrypto;
 import com.google.android.exoplayer2.drm.FrameworkMediaDrm;
@@ -63,6 +68,7 @@ import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.trackselection.MappingTrackSelector;
 import com.google.android.exoplayer2.trackselection.TrackSelection;
+import com.google.android.exoplayer2.trackselection.ExoTrackSelection;
 import com.google.android.exoplayer2.trackselection.TrackSelectionArray;
 import com.google.android.exoplayer2.ui.PlayerControlView;
 import com.google.android.exoplayer2.upstream.BandwidthMeter;
@@ -88,7 +94,7 @@ class ReactExoplayerView extends FrameLayout implements
         BecomingNoisyListener,
         AudioManager.OnAudioFocusChangeListener,
         MetadataOutput,
-        DefaultDrmSessionEventListener {
+        DrmSessionEventListener {
 
     private static final String TAG = "ReactExoplayerView";
 
@@ -172,9 +178,19 @@ class ReactExoplayerView extends FrameLayout implements
                             && player.getPlaybackState() == Player.STATE_READY
                             && player.getPlayWhenReady()
                             ) {
+
+                             
+                        // Log.d("Mux", "progress Changed");
+                        // Log.d("Mux", "Current Manifest: " + player.getCurrentManifest());
+                        // Log.d("Mux", "videoFormat.bitrate: " + player.getVideoFormat().bitrate);
+                        // Log.d("Mux", "videoFormat.averageBitrate: " + player.getVideoFormat().averageBitrate);
+                        // Log.d("Mux", "videoFormat.metadata: " + player.getVideoFormat().metadata);
+                        // Log.d("Mux", "----------------");
+
+                        int indicatedBitrate = player.getVideoFormat().bitrate; //Bitrate neccesary for the playlist (HLS)
                         long pos = player.getCurrentPosition();
                         long bufferedDuration = player.getBufferedPercentage() * player.getDuration() / 100;
-                        eventEmitter.progressChanged(pos, bufferedDuration, player.getDuration(), getPositionInFirstPeriodMsForCurrentWindow(pos));
+                        eventEmitter.progressChanged(pos, bufferedDuration, player.getDuration(), getPositionInFirstPeriodMsForCurrentWindow(pos), indicatedBitrate);
                         msg = obtainMessage(SHOW_PROGRESS);
                         sendMessageDelayed(msg, Math.round(mProgressUpdateInterval));
                     }
@@ -394,7 +410,7 @@ class ReactExoplayerView extends FrameLayout implements
             @Override
             public void run() {
                 if (player == null) {
-                    TrackSelection.Factory videoTrackSelectionFactory = new AdaptiveTrackSelection.Factory();
+                    ExoTrackSelection.Factory videoTrackSelectionFactory = new AdaptiveTrackSelection.Factory();
                     trackSelector = new DefaultTrackSelector(videoTrackSelectionFactory);
                     trackSelector.setParameters(trackSelector.buildUponParameters()
                             .setMaxVideoBitrate(maxBitRate == 0 ? Integer.MAX_VALUE : maxBitRate));
@@ -410,7 +426,7 @@ class ReactExoplayerView extends FrameLayout implements
                             new DefaultRenderersFactory(getContext())
                                     .setExtensionRendererMode(DefaultRenderersFactory.EXTENSION_RENDERER_MODE_OFF);
                     // DRM
-                    DrmSessionManager<FrameworkMediaCrypto> drmSessionManager = null;
+                    DrmSessionManager drmSessionManager = null;
                     if (self.drmUUID != null) {
                         try {
                             drmSessionManager = buildDrmSessionManager(self.drmUUID, self.drmLicenseUrl,
@@ -424,8 +440,11 @@ class ReactExoplayerView extends FrameLayout implements
                         }
                     }
                     // End DRM
-                    player = ExoPlayerFactory.newSimpleInstance(getContext(), renderersFactory,
-                            trackSelector, defaultLoadControl, drmSessionManager, bandwidthMeter);
+                    // player = ExoPlayerFactory.newSimpleInstance(getContext(), renderersFactory,
+                            // trackSelector, defaultLoadControl, drmSessionManager, bandwidthMeter);
+                    player = new SimpleExoPlayer.Builder(getContext(), renderersFactory)
+                                .setTrackSelector(trackSelector)
+                                .build();
                     player.addListener(self);
                     player.addMetadataOutput(self);
                     exoPlayerView.setPlayer(player);
@@ -472,7 +491,7 @@ class ReactExoplayerView extends FrameLayout implements
         }, 1);
     }
 
-    private DrmSessionManager<FrameworkMediaCrypto> buildDrmSessionManager(UUID uuid,
+    private DrmSessionManager buildDrmSessionManager(UUID uuid,
                                                                            String licenseUrl, String[] keyRequestPropertiesArray) throws UnsupportedDrmException {
         if (Util.SDK_INT < 18) {
             return null;
@@ -485,8 +504,16 @@ class ReactExoplayerView extends FrameLayout implements
                         keyRequestPropertiesArray[i + 1]);
             }
         }
-        return new DefaultDrmSessionManager<>(uuid,
-                FrameworkMediaDrm.newInstance(uuid), drmCallback, null, false, 3);
+
+        // DrmSessionManager man = new DefaultDrmSessionManager.Builder();
+
+        return new DefaultDrmSessionManager.Builder()
+                        .setUuidAndExoMediaDrmProvider(uuid, FrameworkMediaDrm.DEFAULT_PROVIDER) //Posible error con framworkMediaDrm, no pasa el uuid
+                        .build(drmCallback);
+
+
+        // return new DefaultDrmSessionManager.Builder(uuid,
+                // FrameworkMediaDrm.newInstance(uuid), drmCallback, null, false, 3);
     }
 
     private MediaSource buildMediaSource(Uri uri, String overrideExtension) {
@@ -888,7 +915,7 @@ class ReactExoplayerView extends FrameLayout implements
         }
         // When repeat is turned on, reaching the end of the video will not cause a state change
         // so we need to explicitly detect it.
-        if (reason == Player.DISCONTINUITY_REASON_PERIOD_TRANSITION
+        if (reason == Player.DISCONTINUITY_REASON_AUTO_TRANSITION
                 && player.getRepeatMode() == Player.REPEAT_MODE_ONE) {
             eventEmitter.end();
         }
@@ -1335,26 +1362,6 @@ class ReactExoplayerView extends FrameLayout implements
     }
 
 
-    @Override
-    public void onDrmKeysLoaded() {
-        Log.d("DRM Info", "onDrmKeysLoaded");
-    }
-
-    @Override
-    public void onDrmSessionManagerError(Exception e) {
-        Log.d("DRM Info", "onDrmSessionManagerError");
-        eventEmitter.error("onDrmSessionManagerError", e);
-    }
-
-    @Override
-    public void onDrmKeysRestored() {
-        Log.d("DRM Info", "onDrmKeysRestored");
-    }
-
-    @Override
-    public void onDrmKeysRemoved() {
-        Log.d("DRM Info", "onDrmKeysRemoved");
-    }
 
     /**
      * Handling controls prop

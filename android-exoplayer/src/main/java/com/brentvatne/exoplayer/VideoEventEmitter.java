@@ -2,6 +2,7 @@ package com.brentvatne.exoplayer;
 
 import androidx.annotation.StringDef;
 import android.view.View;
+import android.util.Log;
 
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReactContext;
@@ -171,12 +172,14 @@ class VideoEventEmitter {
         receiveEvent(EVENT_LOAD, event);
     }
 
-    void progressChanged(double currentPosition, double bufferedDuration, double seekableDuration, double currentPlaybackTime) {
+    void progressChanged(double currentPosition, double bufferedDuration, double seekableDuration, double currentPlaybackTime, int indicatedBitrate) {
+        // Log.d("Mux", "progress Changed");
         WritableMap event = Arguments.createMap();
         event.putDouble(EVENT_PROP_CURRENT_TIME, currentPosition / 1000D);
         event.putDouble(EVENT_PROP_PLAYABLE_DURATION, bufferedDuration / 1000D);
         event.putDouble(EVENT_PROP_SEEKABLE_DURATION, seekableDuration / 1000D);
         event.putDouble(EVENT_PROP_CURRENT_PLAYBACK_TIME, currentPlaybackTime);
+        event.putDouble("indicatedBitrate", indicatedBitrate);
         receiveEvent(EVENT_PROGRESS, event);
     }
 
