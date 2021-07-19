@@ -15,6 +15,7 @@ import android.view.accessibility.CaptioningManager;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 
+
 import com.brentvatne.react.R;
 import com.brentvatne.receiver.AudioBecomingNoisyReceiver;
 import com.brentvatne.receiver.BecomingNoisyListener;
@@ -30,7 +31,7 @@ import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.DefaultRenderersFactory;
 import com.google.android.exoplayer2.ExoPlaybackException;
-import com.google.android.exoplayer2.ExoPlayerFactory;
+// import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.Format;
 import com.google.android.exoplayer2.PlaybackParameters;
 import com.google.android.exoplayer2.Player;
@@ -177,10 +178,19 @@ class ReactExoplayerView extends FrameLayout implements
                             && player.getPlaybackState() == Player.STATE_READY
                             && player.getPlayWhenReady()
                             ) {
-                        Log.d("Mux", "progress Changed2");
+
+                             
+                        // Log.d("Mux", "progress Changed");
+                        // Log.d("Mux", "Current Manifest: " + player.getCurrentManifest());
+                        // Log.d("Mux", "videoFormat.bitrate: " + player.getVideoFormat().bitrate);
+                        // Log.d("Mux", "videoFormat.averageBitrate: " + player.getVideoFormat().averageBitrate);
+                        // Log.d("Mux", "videoFormat.metadata: " + player.getVideoFormat().metadata);
+                        // Log.d("Mux", "----------------");
+
+                        int indicatedBitrate = player.getVideoFormat().bitrate; //Bitrate neccesary for the playlist (HLS)
                         long pos = player.getCurrentPosition();
                         long bufferedDuration = player.getBufferedPercentage() * player.getDuration() / 100;
-                        eventEmitter.progressChanged(pos, bufferedDuration, player.getDuration(), getPositionInFirstPeriodMsForCurrentWindow(pos));
+                        eventEmitter.progressChanged(pos, bufferedDuration, player.getDuration(), getPositionInFirstPeriodMsForCurrentWindow(pos), indicatedBitrate);
                         msg = obtainMessage(SHOW_PROGRESS);
                         sendMessageDelayed(msg, Math.round(mProgressUpdateInterval));
                     }
@@ -905,7 +915,7 @@ class ReactExoplayerView extends FrameLayout implements
         }
         // When repeat is turned on, reaching the end of the video will not cause a state change
         // so we need to explicitly detect it.
-        if (reason == Player.DISCONTINUITY_REASON_PERIOD_TRANSITION
+        if (reason == Player.DISCONTINUITY_REASON_AUTO_TRANSITION
                 && player.getRepeatMode() == Player.REPEAT_MODE_ONE) {
             eventEmitter.end();
         }
